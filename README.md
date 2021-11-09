@@ -71,7 +71,7 @@ dataloader.py
 
 
 # Main program
-main.py  
+### main.py  
     Thip program calls subprograms.  
     You can comment out subprograms if you wish to turn them off.  
 
@@ -79,7 +79,7 @@ main.py
 # Cyclone programs
 ## Commen programs for extratropica cyclones and tropical cyclones
 
-ConstCyclone.py  
+### ConstCyclone.py  
     Edit this program to change parameters.  
 
     #Parameters
@@ -88,49 +88,52 @@ ConstCyclone.py
     thpdif_min  : Minimum central pressure difference [Pa] # Surrounding average - center  
     rvort_min   : Minimum relative vorticy required for cyclones to be tracked [s-1].  
 
-Cyclone.py  
+### Cyclone.py  
     This program provides functions and python class handling cyclones.  
     e.g., You can obtain a dictionary of cyclone centers (key=datetime) using mkInstDictC_noTC function.   
     See c.sample.py  
      
 
-c.runmean.py  
+### c.runmean.py  
     This program makes running mean stearing wind data.  
     No parameters from ConstCyclone.py are used.  
 
-c.find.cyclone.py  
+### c.find.cyclone.py  
     This program finds candidates of cyclone centers from sea level pressure (SLP) field.  
     Average SLP around cyclone center (to calculate central pressure difference) and maximum vorticity around cyclone centers are also calculated.  
     Lats, lons from ConstCyclone.py are used.  
 
-c.connect.fwd.py  
+### c.connect.fwd.py  
     This program tracks the movement of cyclone centers.  
     Genesis position, genesis time, and previous position are identified.  
     Lats, lons, thpdif_min, rvort_min, thdist_search, thtopo from ConstCyclone.py are used.  
 
-c.connect.bwd.py  
+### c.connect.bwd.py  
     This program tracks the movent of cyclone centers in a backward direction.  
     Next position, lifetime duration, and final location are identified.  
     Lats, lons, and thtopo from ConstCyclone.py are used.  
 
-c.mk.clist.obj.py  
+### c.mk.clist.obj.py  
     This program joins 6-hourly data file (.npy) to make monthly file (.npy).  
     Lats, Lons from ConstCyclone.py are used (only to load Cyclone.py and to use load_clist_org)  
 
-c.clist.npy2bin.py  
+### c.clist.npy2bin.py  
     This program converts numpy format data (.npy) to plain binary data (.bin).  
 
 ## Programs for tropical cyclones  
-tc.mk.clist.obj.py  
+### tc.mk.clist.obj.py  
     This program joins TC-related 6-hourly data file (.npy) to make monthly file (.npy).  
     Lats, Lons from ConstCyclone.py are used  
 
 
-tc.mk.clist.obj.initState.py  
+### tc.mk.clist.obj.initState.py  
     This program checks SST and land/sea mask at the genesis location/time of TCs  
     Lats, Lons from ConstCyclone.py are used (only to load Cyclone.py and to use load_clist_org)  
 
+### tc.clist.npy2bin.py  
+    This program converts TC-related numpy format data (.npy) to plain binary data (.bin).  
 
+#
 
 ## Output variables  
 lat             : Latitude  
@@ -152,7 +155,7 @@ y               : y (starts from 0) position of the cyclone center
 
 
 ## Output data format  
-".py"  
+### ".py"  
     numpy data format  
     This data can be read using Python and numpy  
     With python,  
@@ -161,7 +164,7 @@ y               : y (starts from 0) position of the cyclone center
     dat = np.load(filename)  
 ```
 
-".bin"  
+### ".bin"  
     Plain binary (no header) file. Big endian.  
     See Cyclone.py for the data type for each variable (copied below).  
 ```
@@ -233,12 +236,34 @@ y               : y (starts from 0) position of the cyclone center
 ```
 
 
-c.draw.tracks.py  
-    Sample python program for drawing cyclone tracks (numpy, matplotlib, cartopy are required)  
+### c.draw.tracks.py  
+    Sample python program for drawing all cyclone tracks (numpy, matplotlib, cartopy are required)  
+
+### tc.draw.tracks.py  
+    Sample python program for drawing tropical cyclone tracks (numpy, matplotlib, cartopy are required)  
+
+
+### Finding tropical cyclones  
+    Tropical cyclones are detected if a cyclone center satisfies the following conditions
+```
+    "dura"                  >= thdura  
+    "vortlw"                >= thrvortd  
+    "dtlw"+"dtmd"+"dtup"    >= thwcore  
+    "wmaxlw"                >= thwind  
+    "wmaxlw" - "wmaxup"     >= thwdif
+    "initsst"               >= thinitsst
+    "initland"              == 0
+```
+
+    You can also use "mkInstDictC_objTC" method in Cyclone.py  
+    This method generates python dictionary for extratropical cyclones and tropical cyclones.  
+    Dictionary key: datetime  
+    Dictionary value: specified variable (e.g., "nextpos","prepos", "vortlw", etc.)  
+    See **tc.test.py** for detail.  
 
 
 # Front programs  
-ConstFront.py  
+### ConstFront.py  
     Edit this program to change parameters.  
 
     #Parameters
@@ -254,20 +279,20 @@ ConstFront.py
     miss_out    : Missing value for output data  
 
 
-Front.py  
+### Front.py  
     This program provides functions and python class handling fronts.  
 
-f.mk.orogdata.py   
+### f.mk.orogdata.py   
     This program finds maximum surface height within a given radius at each grid point.  
 
-f.mk.potloc.obj.py  
+### f.mk.potloc.obj.py  
     This program calculates parameter M1 and M2.  
 
-f.mk.front.bin.py  
+### f.mk.front.bin.py  
     This program detects fronts from parameter M1 and M2.  
     Output: Plain binary file.  
 
-/f.draw.front.py   
+### f.draw.front.py   
     Sample python program for drawing fronts (numpy, matplotlib, cartopy are required)  
 
 

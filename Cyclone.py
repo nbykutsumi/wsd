@@ -143,12 +143,15 @@ class Cyclone():
         self.thwind = const['thwind']
         self.thwdif = const['thwdif']
     #------------
+    try:
+        self.Lat     = const['Lat'] 
+        self.Lon     = const['Lon'] 
+        self.ny      = len(self.Lat)
+        self.nx      = len(self.Lon)
+    except KeyError:
+        print("No Lat and Lon are set")
+        
 
-    self.Lat     = const['Lat'] 
-    self.Lon     = const['Lon'] 
-
-    self.ny      = len(self.Lat)
-    self.nx      = len(self.Lon)
     self.dNumType= {
                     "x"       :int32,
                     "y"       :int32,
