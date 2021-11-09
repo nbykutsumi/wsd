@@ -61,159 +61,166 @@ dataloader.py
     This program is used to read input data.
     Edit this program to set input file directories.
 
-    Naming convention for input binary data files 
-##  variables at pressure levels
+##   Naming convention for input binary data files 
+###  variables at pressure levels
     {input-dir}/yyyymm/{var}_{plev}.yyyymmddhh.bin     # var: slp, ta, ua, va, topo
                                                        # plev: pressure level (hPa) in 4 digits (e.g., 0850, 0500, 0250)
 
-##  surface height
+###  surface height
     {input-dir}/topo.bin
 
 
 # Main program
-main.py
-    Thip program calls subprograms.
-    You can comment out subprograms if you wish to turn them off.
+main.py  
+    Thip program calls subprograms.  
+    You can comment out subprograms if you wish to turn them off.  
 
  
 # Cyclone programs
 ## Commen programs for extratropica cyclones and tropical cyclones
 
-ConstCyclone.py
-    Edit this program to change parameters.
+ConstCyclone.py  
+    Edit this program to change parameters.  
 
     #Parameters
-    thtopo      : Grid points lower than this height [m] are not used for cyclone detection.
-    thdura      : Minimum lifetime duration [hours] required for cyclones.
-    thpdif_min  : Minimum central pressure difference [Pa] # Surrounding average - center
-    rvort_min   : Minimum relative vorticy required for cyclones to be tracked [s-1].
+    thtopo      : Grid points lower than this height [m] are not used for cyclone detection.  
+    thdura      : Minimum lifetime duration [hours] required for cyclones.  
+    thpdif_min  : Minimum central pressure difference [Pa] # Surrounding average - center  
+    rvort_min   : Minimum relative vorticy required for cyclones to be tracked [s-1].  
 
-Cyclone.py
-    This program provides functions and python class handling cyclones.
-    e.g., You can obtain a dictionary of cyclone centers (key=datetime) using mkInstDictC_noTC function. 
-    See c.sample.py
+Cyclone.py  
+    This program provides functions and python class handling cyclones.  
+    e.g., You can obtain a dictionary of cyclone centers (key=datetime) using mkInstDictC_noTC function.   
+    See c.sample.py  
      
 
-c.runmean.py
-    This program makes running mean stearing wind data.
-    No parameters from ConstCyclone.py are used.
+c.runmean.py  
+    This program makes running mean stearing wind data.  
+    No parameters from ConstCyclone.py are used.  
 
-c.find.cyclone.py
-    This program finds candidates of cyclone centers from sea level pressure (SLP) field.
-    Average SLP around cyclone center (to calculate central pressure difference) and maximum vorticity around cyclone centers are also calculated.
-    Lats, lons from ConstCyclone.py are used.
+c.find.cyclone.py  
+    This program finds candidates of cyclone centers from sea level pressure (SLP) field.  
+    Average SLP around cyclone center (to calculate central pressure difference) and maximum vorticity around cyclone centers are also calculated.  
+    Lats, lons from ConstCyclone.py are used.  
 
-c.connect.fwd.py
-    This program tracks the movement of cyclone centers.
-    Genesis position, genesis time, and previous position are identified.
-    Lats, lons, thpdif_min, rvort_min, thdist_search, thtopo from ConstCyclone.py are used.
+c.connect.fwd.py  
+    This program tracks the movement of cyclone centers.  
+    Genesis position, genesis time, and previous position are identified.  
+    Lats, lons, thpdif_min, rvort_min, thdist_search, thtopo from ConstCyclone.py are used.  
 
-c.connect.bwd.py
-    This program tracks the movent of cyclone centers in a backward direction.
-    Next position, lifetime duration, and final location are identified.
-    Lats, lons, and thtopo from ConstCyclone.py are used.
+c.connect.bwd.py  
+    This program tracks the movent of cyclone centers in a backward direction.  
+    Next position, lifetime duration, and final location are identified.  
+    Lats, lons, and thtopo from ConstCyclone.py are used.  
 
-c.mk.clist.obj.py
-    This program joins 6-hourly data file (.npy) to make monthly file (.npy).
-    Lats, Lons from ConstCyclone.py are used (only to load Cyclone.py and to use load_clist_org)
+c.mk.clist.obj.py  
+    This program joins 6-hourly data file (.npy) to make monthly file (.npy).  
+    Lats, Lons from ConstCyclone.py are used (only to load Cyclone.py and to use load_clist_org)  
 
-c.clist.npy2bin.py
-    This program converts numpy format data (.npy) to plain binary data (.bin).
+c.clist.npy2bin.py  
+    This program converts numpy format data (.npy) to plain binary data (.bin).  
 
-## Programs for tropical cyclones
-tc.mk.clist.obj.py
-    This program joins TC-related 6-hourly data file (.npy) to make monthly file (.npy).
-    Lats, Lons from ConstCyclone.py are used
-
-
-tc.mk.clist.obj.initState.py
-    This program checks SST and land/sea mask at the genesis location/time of TCs
-    Lats, Lons from ConstCyclone.py are used (only to load Cyclone.py and to use load_clist_org)
+## Programs for tropical cyclones  
+tc.mk.clist.obj.py  
+    This program joins TC-related 6-hourly data file (.npy) to make monthly file (.npy).  
+    Lats, Lons from ConstCyclone.py are used  
 
 
-
-## Output variables
-lat             : Latitude
-lon             : Longitude
-nowpos          : Current position
-age             : Hours from genesis time
-dura            : Lifetime hours from genesis to the end
-epos            : Final (end) position
-idate           : Genesis (initial) time
-ipos            : Genesis (initial) position
-nextpos         : Next timestep position
-prepos          : Previous timestep position
-slp_mean_adj    : SLP averaged over adjacent 8 gird boxes [Pa]
-slp_mean_box    : SLP averaged over 8deg x 8deg box centered on the cyclone [Pa]
-vortlw          : Low level (default:850hPa) vorticity [s-1]
-vortlw_max_box  : Maximum low level (default:850hPa) vorticity [s-1] in the 8deg x 8deg box centered on the cyclone
-x               : x (starts from 0) position of the cyclone center
-y               : y (starts from 0) position of the cyclone center
+tc.mk.clist.obj.initState.py  
+    This program checks SST and land/sea mask at the genesis location/time of TCs  
+    Lats, Lons from ConstCyclone.py are used (only to load Cyclone.py and to use load_clist_org)  
 
 
-## Output data format
-".py"
-    numpy data format
-    This data can be read using Python and numpy
-    With python,
-    > import numpy
-    > dat = np.load(filename)
 
-".bin"
-    Plain binary (no header) file. Big endian.
-    See Cyclone.py for the data type for each variable (copied below).
-    self.dNumType= {
-                    "x"       :int32,
-                    "y"       :int32,
-                    "life"    :int32,
-                    "dura"    :int32,
-                    "ipos"    :int32,
-                    "epos"    :int32,
-                    "idate"   :int32,
-                    "time"    :int32,
-                    "age"     :int32,
-                    "nowpos"  :int32,
-                    "lastpos" :int32,
-                    "prepos"  :int32,
-                    "nextpos" :int32,
-                    "pgrad"   :float32,
-                    "vortlw"  :float32,
-                    "vortlw_max_box":float32,
-                    "pgmax"   :float32,
-                    "pmean"   :float32,
-                    "iedist"  :float32,
-                    "dtlw"    :float32,
-                    "dtmd"    :float32,
-                    "dtup"    :float32,
-                    "wmeanlow":float32,
-                    "wmeanup" :float32,
-                    "wmaxlw"  :float32,
-                    "wmaxup"  :float32,
-                    "sst"     :float32,
-                    "land"    :float32,
-                    "initsst" :float32,
-                    "initland":float32,
-                    "iedist"  :float32,
-                    "lat"     :float32,
-                    "lon"     :float32,
-                    "slp"     :float32,
-                    "slp_mean_adj":float32,
-                    "slp_mean_box":float32,
-                   }
+## Output variables  
+lat             : Latitude  
+lon             : Longitude  
+nowpos          : Current position  
+age             : Hours from genesis time  
+dura            : Lifetime hours from genesis to the end  
+epos            : Final (end) position  
+idate           : Genesis (initial) time  
+ipos            : Genesis (initial) position  
+nextpos         : Next timestep position  
+prepos          : Previous timestep position  
+slp_mean_adj    : SLP averaged over adjacent 8 gird boxes [Pa]  
+slp_mean_box    : SLP averaged over 8deg x 8deg box centered on the cyclone [Pa]  
+vortlw          : Low level (default:850hPa) vorticity [s-1]  
+vortlw_max_box  : Maximum low level (default:850hPa) vorticity [s-1] in the 8deg x 8deg box centered on the cyclone  
+x               : x (starts from 0) position of the cyclone center  
+y               : y (starts from 0) position of the cyclone center  
 
 
-    The record length of the output variable files is the same for month. Records are saved in the same order.
-    e.g., N-th record of "dura" is the life time duration of the cyclone at N-th record of "nowpos" location at the time of N-th record of "time".
+## Output data format  
+".py"  
+    numpy data format  
+    This data can be read using Python and numpy  
+    With python,  
+```
+    import numpy  
+    dat = np.load(filename)  
+```
 
-## Decording "time"
-    def solve_time(stime):
-      year = int( stime/10**6 )
-      mon  = int( (stime - year*10**6)/10**4 )
-      day  = int( (stime - year*10**6 - mon*10**4)/10**2)
-      hour = int( (stime - year*10**6 - mon*10**4 - day*10**2) )
-      return year, mon, day, hour
+".bin"  
+    Plain binary (no header) file. Big endian.  
+    See Cyclone.py for the data type for each variable (copied below).  
+```
+    self.dNumType= {  
+                    "x"       :int32,  
+                    "y"       :int32,  
+                    "life"    :int32,  
+                    "dura"    :int32,  
+                    "ipos"    :int32,  
+                    "epos"    :int32,  
+                    "idate"   :int32,  
+                    "time"    :int32,  
+                    "age"     :int32,  
+                    "nowpos"  :int32,  
+                    "lastpos" :int32,  
+                    "prepos"  :int32,  
+                    "nextpos" :int32,  
+                    "pgrad"   :float32,  
+                    "vortlw"  :float32,  
+                    "vortlw_max_box":float32,  
+                    "pgmax"   :float32,   
+                    "pmean"   :float32,   
+                    "iedist"  :float32,   
+                    "dtlw"    :float32,   
+                    "dtmd"    :float32,   
+                    "dtup"    :float32,   
+                    "wmeanlow":float32,   
+                    "wmeanup" :float32,   
+                    "wmaxlw"  :float32,   
+                    "wmaxup"  :float32,   
+                    "sst"     :float32,   
+                    "land"    :float32,   
+                    "initsst" :float32,   
+                    "initland":float32,   
+                    "iedist"  :float32,   
+                    "lat"     :float32,   
+                    "lon"     :float32,   
+                    "slp"     :float32,   
+                    "slp_mean_adj":float32,  
+                    "slp_mean_box":float32,  
+                   }  
+```
+
+
+    The record length of the output variable files is the same for month. Records are saved in the same order.  
+    e.g., N-th record of "dura" is the life time duration of the cyclone at N-th record of "nowpos" location at the time of N-th record of "time".  
+
+## Decording "time"  
+```
+    def solve_time(stime):  
+      year = int( stime/10**6 )  
+      mon  = int( (stime - year*10**6)/10**4 )  
+      day  = int( (stime - year*10**6 - mon*10**4)/10**2)  
+      hour = int( (stime - year*10**6 - mon*10**4 - day*10**2) )  
+      return year, mon, day, hour  
+```
 
 ## Decording position (ipos, epos, prepos, nowpos, nextpos)
+```
     def fortpos2pyxy(number, nx, miss_int):
       if (number == miss_int):
         iy_py = miss_int
@@ -223,44 +230,45 @@ y               : y (starts from 0) position of the cyclone center
         ix_py = int(number - nx*iy_py-1)   # ix_py = 0,1,2,..
       #----
       return ix_py, iy_py
+```
 
 
-c.draw.tracks.py
-    Sample python program for drawing cyclone tracks (numpy, matplotlib, cartopy are required)
+c.draw.tracks.py  
+    Sample python program for drawing cyclone tracks (numpy, matplotlib, cartopy are required)  
 
 
-# Front programs
-ConstFront.py
-    Edit this program to change parameters.
+# Front programs  
+ConstFront.py  
+    Edit this program to change parameters.  
 
     #Parameters
-    thorog      : Grid points lower than this height [m] close to such grid points are not used for front detection.
-    thgradorog  : Threshold of average slope between adjacent grid points. Grid points with large slopes are excluded from front detection.
-    trace_coef  : Parameter to be used for filling gaps of fronts. Nomally, this parameter is not tuned.
-    thMt1       : Threshold for M1 for front detection   # K/100km/100km
-    thMt2       : Threshold for M2 for front detection   # K/100km
-    thMt1       : [Option] Parameter 1 for front detection. Not used for the default setting.   # K/100km/100km
-    thMt2       : [Option] Parameter 2 for front detection. Not used for the default setting.   # K/100km
-    thgrids     : This parameter is used to delete too short fronts. Fronts less than this number of grids are removed.
-    miss_in     : Missing value for input data
-    miss_out    : Missing value for output data
+    thorog      : Grid points lower than this height [m] close to such grid points are not used for front detection.  
+    thgradorog  : Threshold of average slope between adjacent grid points. Grid points with large slopes are excluded from front detection.  
+    trace_coef  : Parameter to be used for filling gaps of fronts. Nomally, this parameter is not tuned.  
+    thMt1       : Threshold for M1 for front detection   # K/100km/100km  
+    thMt2       : Threshold for M2 for front detection   # K/100km  
+    thMt1       : [Option] Parameter 1 for front detection. Not used for the default setting.   # K/100km/100km  
+    thMt2       : [Option] Parameter 2 for front detection. Not used for the default setting.   # K/100km  
+    thgrids     : This parameter is used to delete too short fronts. Fronts less than this number of grids are removed.  
+    miss_in     : Missing value for input data  
+    miss_out    : Missing value for output data  
 
 
-Front.py
-    This program provides functions and python class handling fronts.
+Front.py  
+    This program provides functions and python class handling fronts.  
 
-f.mk.orogdata.py 
-    This program finds maximum surface height within a given radius at each grid point.
+f.mk.orogdata.py   
+    This program finds maximum surface height within a given radius at each grid point.  
 
-f.mk.potloc.obj.py
-    This program calculates parameter M1 and M2.
+f.mk.potloc.obj.py  
+    This program calculates parameter M1 and M2.  
 
-f.mk.front.bin.py
-    This program detects fronts from parameter M1 and M2.
-    Output: Plain binary file.
+f.mk.front.bin.py  
+    This program detects fronts from parameter M1 and M2.  
+    Output: Plain binary file.  
 
-/f.draw.front.py
-    Sample python program for drawing fronts (numpy, matplotlib, cartopy are required)
+/f.draw.front.py   
+    Sample python program for drawing fronts (numpy, matplotlib, cartopy are required)  
 
 
 
