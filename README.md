@@ -46,7 +46,9 @@ The detection programs are written in Python3.X (tested in Python3.8) and fortra
     slp     :Sea level pressure [Pa]
     ta      :Air temperature [K] at low, middle, and upper levels (normally at 850, 500, 250hPa).
     ua, va  :Meridional and zonal wind speed [m/s] at low and middle levels (normally at 850 and 500hPa).
+    sst     :Monthly sea surface temperature [K] (for TC).
     topo    :Surface heigt [m]
+    land    :Land/Sea mask: (For TC) Sea is 0. Land >0. 
 
 ##  Input file format:
     Big endian plain binary (no header), 32bit floating point number.
