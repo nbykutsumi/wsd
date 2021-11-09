@@ -12,10 +12,10 @@ This tool detects weather systems (currently tropical cyclone, extratropical cyc
 The detection programs are written in Python3.X (tested in Python3.8) and fortran.
 
 
-* Edit f2py.make.py
+* Edit f2py.make.py  
     Set fortran compiler path
 
-* Compile fortran subprogram to be called from python programs
+* Compile fortran subprogram to be called from python programs  
     (f2py is used. Install it if it is not in your environment)
 
 ```bash
@@ -26,18 +26,18 @@ The detection programs are written in Python3.X (tested in Python3.8) and fortra
     You can see "Removing build directory ..." at the end of the
     output message if the compile is successful.
 
-* Edit dataloader.py
+* Edit dataloader.py  
     Set inpput file directories (explained later)
 
-* Edit ConstCyclone.py and ConstFronts.py
+* Edit ConstCyclone.py and ConstFronts.py  
     Detectoion parameters are set in these files (explained later).
 
 
-* Edit main.py
+* Edit main.py  
     Set output directory (wsbaseDir).
     You can also change experiment names (explained later).
 
-* Run main.py
+* Run main.py  
 ```bash
     python main.py
 ```
