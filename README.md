@@ -19,12 +19,12 @@ The detection programs are written in Python3.X (tested in Python3.8) and fortra
     (f2py is used. Install it if it is not in your environment)
 
 ```bash
-    python f2py.make.py detect_fsub.f90
-    python f2py.make.py front_fsub.f90
+    python f2py.make.py detect_fsub.f90  
+    python f2py.make.py front_fsub.f90  
 ```
 
-    You can see "Removing build directory ..." at the end of the
-    output message if the compile is successful.
+   You can see "Removing build directory ..." at the end of the  
+   output message if the compile is successful.  
 
 * Edit dataloader.py  
     Set inpput file directories (explained later)
@@ -64,12 +64,22 @@ dataloader.py
     Edit this program to set input file directories.
 
 ##   Naming convention for input binary data files 
-###  variables at pressure levels
+###  6-hourly variables at pressure levels (6-hourly)
     {input-dir}/yyyymm/{var}_{plev}.yyyymmddhh.bin     # var: slp, ta, ua, va, topo
                                                        # plev: pressure level (hPa) in 4 digits (e.g., 0850, 0500, 0250)
 
-###  surface height
+###  6-hourly surface variables (slp)
+    {input-dir}/{var}.yyyymmddhh.bin
+
+###  Monthly surface variables (SST)
+    {input-dir}/{var}.yyyymm.bin
+
+###  Surface height
     {input-dir}/topo.bin
+
+###  Land-sea mask
+    {input-dir}/land.bin
+
 
 
 # Main program
