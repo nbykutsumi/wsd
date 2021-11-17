@@ -1,5 +1,5 @@
 # WSD: Weather System Detector
-"WSD" is an objective detection tool for weather systems
+"WSD" is an objective detection tool for weather systems.  
 This tool detects weather systems (currently tropical cyclone, extratropical cyclones, and fronts) from atmospheric fields.
 
 # Requirment (python libraries)

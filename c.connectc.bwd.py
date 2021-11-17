@@ -249,8 +249,15 @@ for idt, DTime1 in enumerate(lDTimeRev):
       a1epos2   = np.load(eposname2)
       a1y2      = np.load(yname2)
       a1x2      = np.load(xname2)
+      a2dura2= np.full([ny,nx],miss_int, int32)
+      a2epos2= np.full([ny,nx],miss_int, int32)
+      for i in range(len(a1dura2)):
+        y2 = a1y2[i]
+        x2 = a1x2[i]
 
-
+        a2dura2[y2,x2] = a1dura2[i]
+        a2epos2[y2,x2] = a1epos2[i]
+      #
       a2duranext= np.full([ny,nx],miss_int, int32)
       a2eposnext= np.full([ny,nx],miss_int, int32)
       for iy1 in range(ny):

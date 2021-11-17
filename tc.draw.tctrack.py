@@ -83,9 +83,9 @@ eYM = [eDTime.year,eDTime.month]
 _, dtcxy  = cy.mkInstDictC_objTC(iYM,eYM,varname='vortlw')
 _, dtcppos= cy.mkInstDictC_objTC(iYM,eYM,varname='prepos')
 
-print(_)
-print(dtcppos)
-sys.exit()
+#print(_)
+#print(dtcppos)
+#sys.exit()
 #------------------------
 figmap   = plt.figure(figsize=(6,4))
 axmap    = figmap.add_axes([0.1, 0.1, 0.7, 0.8], projection=ccrs.PlateCarree())
