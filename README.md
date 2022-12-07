@@ -26,8 +26,11 @@ The detection programs are written in Python3.X (tested in Python3.8) and fortra
    You can see "Removing build directory ..." at the end of the  
    output message if the compile is successful.  
 
-* Edit dataloader.py  
-    Set inpput file directories (explained later)
+* Edit dataloader.py
+    Create a symbolic link to appropriate dataloader.
+    e.g., >ln -s dataloader_CMIP6.py dataloader.py
+
+    Set input file directories (explained later)
 
 * Edit ConstCyclone.py and ConstFronts.py  
     Detectoion parameters are set in these files (explained later).
